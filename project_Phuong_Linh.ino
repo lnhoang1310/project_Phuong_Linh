@@ -25,6 +25,7 @@
 #define MQTT_USER   "esp32cam_Duong"
 #define MQTT_PASS   "Duong1111111111"
 #define TOPIC_STATUS "driver_status"
+#define TOPIC_NODE_RED "driver/hear_rate"
 
 /* ================= BUZZER ================= */
 #define BUZZER_PIN 33
@@ -277,7 +278,7 @@ void loop() {
     doc["heart_rate"] = heartRate_Filter;
     char payload[128];
     serializeJson(doc, payload);
-    client.publish(TOPIC_STATUS, payload);
+    client.publish(TOPIC_NODE_RED, payload);
     Serial.print("Publish MQTT: ");
     Serial.println(heartRate_Filter);
   }
