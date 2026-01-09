@@ -28,12 +28,12 @@
 
 /* ================= BUZZER ================= */
 #define BUZZER_PIN 33
-
+#define LED_PIN 2
 /* ================= MAX30102 ================= */
 MAX30105 particleSensor;
 float heartRate = 0;
 float heartRate_Filter = 75;
-float alpha = 0.3f;
+float alpha = 0.15f;
 long lastBeat = 0;
 bool no_finger = true;
 
@@ -97,16 +97,19 @@ void buzzerTask() {
   uint32_t now = millis();
 
   if (buzzerMode == BUZZER_OFF) {
+    digitalWrite(LED_PIN, LOW);
     digitalWrite(BUZZER_PIN, LOW);
     return;
   }
 
   if (buzzerMode == BUZZER_NGU_GAT) {
+    digitalWrite(LED_PIN, HIGH);
     digitalWrite(BUZZER_PIN, HIGH);
     return;
   }
 
   if (buzzerMode == BUZZER_BUON_NGU) {
+    digitalWrite(LED_PIN, HIGH);
     if (beepCount < 2) {
       if (!buzzerState) {
         digitalWrite(BUZZER_PIN, HIGH);
@@ -221,7 +224,11 @@ void setup() {
   Serial.begin(115200);
 
   pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
   digitalWrite(BUZZER_PIN, LOW);
+  digitalWrite(LED_PIN, HIGH);
+  delay(1000);
+  digitalWrite(LED_PIN, LOW);
 
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   while (WiFi.status() != WL_CONNECTED) delay(500);
@@ -258,7 +265,7 @@ void loop() {
       long delta = millis() - lastBeat;
       lastBeat = millis();
       heartRate = 60.0 / (delta / 1000.0);
-      if (heartRate >= 50 && heartRate <= 120) {
+      if (heartRate >= 50 && heartRate <= 85) {
         heartRate_Filter = alpha * heartRate + (1 - alpha) * heartRate_Filter;
       }
     }
