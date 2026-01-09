@@ -13,11 +13,11 @@
 #include "camera_pins.h"
 
 /* ================= WIFI ================= */
-// #define WIFI_SSID   "Nhà 4"
-// #define WIFI_PASS   "12348765"
+#define WIFI_SSID   "Nhà 4"
+#define WIFI_PASS   "12348765"
 
-#define WIFI_SSID   "Lâm Hoàng"
-#define WIFI_PASS   "123456789"
+// #define WIFI_SSID   "Lâm Hoàng"
+// #define WIFI_PASS   "123456789"
 
 /* ================= MQTT ================= */
 #define MQTT_BROKER "06584af3887143f19a8ff4d8987d848f.s1.eu.hivemq.cloud"
